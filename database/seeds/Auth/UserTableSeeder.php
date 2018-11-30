@@ -27,6 +27,7 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
+			'is_agency'         => false,
         ]);
 
         User::create([
@@ -36,6 +37,7 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
+			'is_agency'         => false,
         ]);
 
         User::create([
@@ -45,6 +47,7 @@ class UserTableSeeder extends Seeder
             'password'          => 'secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed'         => true,
+			'is_agency'         => false,
         ]);
 
         $this->enableForeignKeys();

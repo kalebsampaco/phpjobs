@@ -125,6 +125,7 @@ return [
             'register_box_title' => 'Register',
             'register_button'    => 'Register',
             'remember_me'        => 'Remember Me',
+			'mailing_subscription' => 'Mailing Subscription',
         ],
 
         'contact' => [

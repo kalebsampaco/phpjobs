@@ -7,15 +7,14 @@ use Illuminate\Database\Migrations\Migration;
 /**
  * Class CreateUsersTable.
  */
-class CreateUsersTable extends Migration
-{
+class CreateUsersTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create(config('access.table_names.users'), function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid');
@@ -32,6 +31,15 @@ class CreateUsersTable extends Migration
             $table->string('timezone')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
+            $table->string('name')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('company_logo')->nullable();
+            $table->text('company_url')->nullable();
+            $table->longText('company_description')->nullable();
+            $table->tinyInteger('is_agency')->default(0)->unsigned();
+            $table->enum('type', ['jobseeker', 'employer']);
+            $table->enum('status', ['new', 'active', 'disabled'])->default('new');
+            $table->enum('promo_status', ['active', 'inactive'])->default('inactive');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
@@ -43,8 +51,8 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists(config('access.table_names.users'));
     }
+
 }
