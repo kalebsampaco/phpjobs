@@ -91,19 +91,21 @@ class UserRepository extends BaseRepository
      */
     public function create(array $data)
     {
+//        print_r($data);
         return DB::transaction(function () use ($data) {
             $user = parent::create([
-//                'first_name'        => $data['first_name'],
+//               'first_name'        => $data['name'],
 //                'last_name'         => $data['last_name'],
                 'name'             => $data['name'],
                 'email'             => $data['email'],
+                'phone'             => $data['phone'],
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'active'            => 1,
                 'password'          => $data['password'],
                                     // If users require approval or needs to confirm email
                 'confirmed'         => config('access.users.requires_approval') || config('access.users.confirm_email') ? 0 : 1,
             ]);
-
+          
             if ($user) {
                 /*
                  * Add the default site role to the new user

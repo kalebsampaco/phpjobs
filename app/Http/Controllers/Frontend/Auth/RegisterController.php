@@ -62,7 +62,9 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        $user = $this->userRepository->create($request->only('name', 'email', 'password'));
+//        print_r($_POST);exit;
+        
+        $user = $this->userRepository->create($request->only('name', 'email', 'phone', 'password'));
 
         // If the user must confirm their email or their account requires approval,
         // create the account but don't log them in.
