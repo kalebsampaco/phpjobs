@@ -9,15 +9,14 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Class RegisterRequest.
  */
-class RegisterRequest extends FormRequest
-{
+class RegisterRequest extends FormRequest {
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -26,14 +25,13 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             /* 'first_name'           => ['required', 'string', 'max:191'], */
             /* 'last_name'            => ['required', 'string', 'max:191'], */
-			'name'            => ['required', 'string', 'max:191'],
-            'email'                => ['required', 'string', 'email', 'max:191', Rule::unique('users')],
-            'password'             => ['required', 'string', 'min:6', 'confirmed'],
+            'name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'string', 'email', 'max:191', Rule::unique('users')],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
             'g-recaptcha-response' => ['required_if:captcha_status,true', new CaptchaRule()],
         ];
     }
@@ -41,10 +39,10 @@ class RegisterRequest extends FormRequest
     /**
      * @return array
      */
-    public function messages()
-    {
+    public function messages() {
         return [
             'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),
         ];
     }
+
 }

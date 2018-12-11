@@ -202,6 +202,12 @@ return [
             'old_password'              => 'Old Password',
             'timezone'                  => 'Timezone',
             'language'                  => 'Language',
+            'mailing_subscription' => 'Mailing Subscription',
+            'is_agency' => 'Company is a recruitment agency',
+            'company_name' => 'Company Name',
+            'company_url' => 'Company URL',
+            'company_desc' => 'Company Description',
+            'company_logo' => 'Company Logo',
         ],
     ],
 ];

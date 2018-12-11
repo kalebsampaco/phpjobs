@@ -8,12 +8,13 @@ use App\Helpers\Frontend\Auth\Socialite;
 use App\Events\Frontend\Auth\UserRegistered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Repositories\Frontend\Auth\UserRepository;
+use Illuminate\Http\Request;
 
 /**
  * Class RegisterController.
  */
-class RegisterController extends Controller
-{
+class RegisterController extends Controller {
+
     use RegistersUsers;
 
     /**
@@ -26,8 +27,7 @@ class RegisterController extends Controller
      *
      * @param UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository)
-    {
+    public function __construct(UserRepository $userRepository) {
         $this->userRepository = $userRepository;
     }
 
@@ -36,8 +36,7 @@ class RegisterController extends Controller
      *
      * @return string
      */
-    public function redirectPath()
-    {
+    public function redirectPath() {
         return route(home_route());
     }
 
@@ -46,12 +45,15 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showRegistrationForm()
-    {
+    public function showRegistrationForm($type) {
         abort_unless(config('access.registration'), 404);
 
+        if ($type != 'employer' && $type != 'jobseeker') {
+            return abort(404);
+        }
         return view('frontend.auth.register')
-            ->withSocialiteLinks((new Socialite)->getSocialLinks());
+                        ->withSocialiteLinks((new Socialite)->getSocialLinks())->with('type', $type);
+        ;
     }
 
     /**
@@ -60,11 +62,17 @@ class RegisterController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Throwable
      */
-    public function register(RegisterRequest $request)
-    {
-//        print_r($_POST);exit;
-        
-        $user = $this->userRepository->create($request->only('name', 'email', 'phone', 'password'));
+    public function register(RegisterRequest $request) {
+        $type = $request->input('type');
+        if ($type != 'employer' && $type != 'jobseeker') {
+            return abort(404);
+        }
+
+        if ($type === 'employer') {
+            $user = $this->userRepository->create($request->all());
+        } else {
+            $user = $this->userRepository->create($request->only('name', 'email', 'phone', 'password', 'mailing_subscription'));
+        }
 
         // If the user must confirm their email or their account requires approval,
         // create the account but don't log them in.
@@ -72,9 +80,9 @@ class RegisterController extends Controller
             event(new UserRegistered($user));
 
             return redirect($this->redirectPath())->withFlashSuccess(
-                config('access.users.requires_approval') ?
-                    __('exceptions.frontend.auth.confirmation.created_pending') :
-                    __('exceptions.frontend.auth.confirmation.created_confirm')
+                            config('access.users.requires_approval') ?
+                            __('exceptions.frontend.auth.confirmation.created_pending') :
+                            __('exceptions.frontend.auth.confirmation.created_confirm')
             );
         } else {
             auth()->login($user);
@@ -84,4 +92,5 @@ class RegisterController extends Controller
             return redirect($this->redirectPath());
         }
     }
+
 }

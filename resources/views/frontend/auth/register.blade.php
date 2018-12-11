@@ -89,17 +89,74 @@
                         </div><!--form-group-->
                     </div><!--col-->
                 </div><!--row-->
+                
+                <!-- FOR EMPLOYER ONLY--->
+                @if ($type === 'employer')
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ html()->label(__('validation.attributes.frontend.company_name'))->for('company_name') }}
 
+                            {{ html()->text('company_name')
+                                        ->class('form-control')
+                                        ->placeholder(__('validation.attributes.frontend.company_name')) }}
+                        </div><!--form-group-->
+                    </div><!--col-->
+                </div><!--row-->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ html()->label(__('validation.attributes.frontend.company_url'))->for('company_url') }}
+
+                            {{ html()->text('company_url')
+                                        ->class('form-control')
+                                        ->placeholder(__('validation.attributes.frontend.company_url')) }}
+                        </div><!--form-group-->
+                    </div><!--col-->
+                </div><!--row-->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ html()->label(__('validation.attributes.frontend.company_desc'))->for('company_desc') }}
+
+                            {{ html()->textarea('company_desc')
+                                        ->class('form-control')
+                                        ->placeholder(__('validation.attributes.frontend.company_desc')) }}
+                        </div><!--form-group-->
+                    </div><!--col-->
+                </div><!--row-->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ html()->label(__('validation.attributes.frontend.company_logo'))->for('company_logo') }}
+
+                            {{ html()->file('company_logo')
+                                        ->class('form-control') }}
+                        </div><!--form-group-->
+                    </div><!--col-->
+                </div><!--row-->
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
                             <div class="checkbox">
-                                {{ html()->label(html()->checkbox('mailing_subscription', false, 0) . ' ' . __('labels.frontend.auth.mailing_subscription'))->for('mailing_subscription') }}
+                                {{ html()->label(html()->checkbox('is_agency', false, 0) . ' ' . __('validation.attributes.frontend.is_agency'))->for('is_agency') }}
                             </div>
                         </div><!--form-group-->
                     </div><!--col-->
                 </div><!--row-->
-
+                @endif
+                <!-- FOR EMPLOYER END--->           
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                {{ html()->label(html()->checkbox('mailing_subscription', true, 1) . ' ' . __('validation.attributes.frontend.mailing_subscription'))->for('mailing_subscription') }}
+                            </div>
+                        </div><!--form-group-->
+                    </div><!--col-->
+                </div><!--row-->
+                {{ html()->hidden('type', $type) }}
                 @if(config('access.captcha.registration'))
                 <div class="row">
                     <div class="col">

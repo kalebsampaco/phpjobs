@@ -51,7 +51,7 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
 
         // Registration Routes
         if (config('access.registration')) {
-            Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+            Route::get('register/{type}', [RegisterController::class, 'showRegistrationForm'])->name('register');
             Route::post('register', [RegisterController::class, 'register'])->name('register.post');
         }
 

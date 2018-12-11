@@ -16,8 +16,8 @@ use App\Models\Auth\Traits\Relationship\UserRelationship;
 /**
  * Class User.
  */
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     use HasRoles,
         Notifiable,
         SendUserPasswordReset,
@@ -36,8 +36,8 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
-		'name',
-		'phone',
+        'name',
+        'phone',
         'email',
         'avatar_type',
         'avatar_location',
@@ -49,6 +49,12 @@ class User extends Authenticatable
         'timezone',
         'last_login_at',
         'last_login_ip',
+        'company_name',
+        'company_description',
+        'company_url',
+        'company_logo',
+        'is_agency',
+        'type',
     ];
 
     /**
@@ -78,4 +84,5 @@ class User extends Authenticatable
         'active' => 'boolean',
         'confirmed' => 'boolean',
     ];
+
 }
