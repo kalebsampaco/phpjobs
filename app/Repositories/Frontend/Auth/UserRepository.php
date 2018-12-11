@@ -91,7 +91,6 @@ class UserRepository extends BaseRepository
      */
     public function create(array $data)
     {
-        print_r($data); exit;
         return DB::transaction(function () use ($data) {
             $user = parent::create([
 //               'first_name'        => $data['name'],

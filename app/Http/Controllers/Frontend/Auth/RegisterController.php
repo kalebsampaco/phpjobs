@@ -71,7 +71,7 @@ class RegisterController extends Controller {
         if ($type === 'employer') {
             $user = $this->userRepository->create($request->all());
         } else {
-            $user = $this->userRepository->create($request->only('name', 'email', 'phone', 'password', 'mailing_subscription'));
+            $user = $this->userRepository->create($request->only('name', 'email', 'phone', 'password'));
         }
 
         // If the user must confirm their email or their account requires approval,
